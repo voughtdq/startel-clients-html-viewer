@@ -1,0 +1,9 @@
+{% extends 'agent/base.html' %}
+{%block client_id%}{{client_id}}{%endblock client_id%}
+{% block content %}
+{% include 'agent/_form.html' %}
+<h1>{{object.client_id}}</h1>
+{% autoescape off %}
+{{object.data}}
+{% endautoescape %}
+{% endblock content %}
