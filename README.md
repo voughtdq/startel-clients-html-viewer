@@ -42,7 +42,8 @@ If on Windows, you may need to run
 `python -m pip install -r requirements.txt`
 
 ## Create settings file
-Copy `settings.example.py` into a new file in the same directory called `settings.py`.
+Copy `clients/settings.example.py` into a new file called `clients/settings.py`
+or follow the instructions in the last section to use a custom settings file.
 
 We need to copy the secret key into the settings file.
 
@@ -85,7 +86,8 @@ If you need to change the settings file, use the `DJANGO_SETTINGS_MODULE` enviro
 ## Import Startel HTML Clients Report
 Navigate to SAC > Reports > System Reports > Clients
 
-⚠️ For the import to run correctly, "1-line Headers" must be checked and "Add Page Break Between Clients" must be checked.
+⚠️ For the import to run correctly, "1-line Headers" must be checked and "Add
+Page Break Between Clients" must be checked.
 
 To begin the import, run
 
