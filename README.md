@@ -15,10 +15,12 @@ appropriate repositories in your package management system. The minimum version
 required is 3.8.5.
 
 ## Download release or clone
-Download the release archive or clone this repository. If you want to clone it,
-make sure to [install git](https://git-scm.com/download) then run
+Download the [release
+archive](https://github.com/voughtdq/startel-clients-html-viewer/tags) or clone
+this repository. If you want to clone it, make sure to [install
+git](https://git-scm.com/download) then run
 
-`git clone https://github.com/voughtdq/startel-clients-report-viewer`
+`git clone https://github.com/voughtdq/startel-clients-html-viewer`
 
 ## Set up virtual environment
 In the same folder that the files were extracted to, create a virtual environment:
