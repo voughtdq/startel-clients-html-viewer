@@ -38,7 +38,13 @@ class StartelClientsHTMLImporter:
         with open(self.report_path, 'r') as report:
             for block in report.read().split('<BR class=brk>'):
                 client_id = self._get_client_id(block)
-                client, created = ClientPage.objects.update_or_create(client_id=int(client_id), data=block)
+                try:
+                    client_id = int(client_id)
+                except ValueError:
+                    logger.warning(f'Skipping non-integer {client_id}')
+                    continue
+
+                client, created = ClientPage.objects.update_or_create(client_id=client_id, data=block)
 
                 if created:
                     created_count += 1
