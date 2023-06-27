@@ -1,0 +1,18 @@
+{% extends 'agent/base.html' %}
+{% block title %}Clients{% endblock title %}
+{% block content %}
+{% include 'agent/_form.html' %}
+<h1>Clients</h1>
+{% if object_list %}
+<table>
+{% for client in object_list %}
+    <tr>
+        <td><a href="{% url 'client-show' client.client_id %}">{{ client.client_id }}</a></td>
+        <td><a href="{% url 'client-show' client.client_id %}">{{ client.name }}</a></td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+No clients added yet. Check the readme for instructions on how to import clients.
+{% endif %}
+{% endblock content %}

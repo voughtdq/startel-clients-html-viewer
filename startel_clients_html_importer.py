@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'clients.settings')
@@ -36,22 +37,27 @@ class StartelClientsHTMLImporter:
         created_count = 0
 
         with open(self.report_path, 'r') as report:
-            for block in report.read().split('<BR class=brk>'):
+            for block in re.split('<BR class=brk>', report.read(), flags=re.IGNORECASE):
                 client_id = self._get_client_id(block)
+                name = self._get_client_name(block)
+
                 try:
                     client_id = int(client_id)
                 except ValueError:
                     logger.warning(f'Skipping non-integer {client_id}')
                     continue
 
-                client, created = ClientPage.objects.update_or_create(client_id=client_id, data=block)
+                client, created = ClientPage.objects.update_or_create(
+                    client_id=client_id, 
+                    defaults={'data': block, 'name': name}
+                )
 
                 if created:
                     created_count += 1
-                    logger.info(f'Adding {client_id}')
+                    logger.info(f'Adding {client_id} - {name}')
                 else:
                     updated_count += 1
-                    logger.warning(f'Updating {client_id}')
+                    logger.warning(f'Updating {client_id} - {name}')
         
         logger.info(f'''
         Import finished
@@ -68,6 +74,14 @@ class StartelClientsHTMLImporter:
         client_id = soup.find('tbody').find_all('tr')[2].find('td').text
 
         return client_id
+    
+    @staticmethod
+    def _get_client_name(block):
+        # second td in second tr of first tbody
+        soup = BeautifulSoup(block, 'html5lib')
+        client_name = soup.find('tbody').find_all('tr')[2].find_all('td')[1].text
+
+        return client_name
     
     @staticmethod
     def _raise_if_not_synchronized():
